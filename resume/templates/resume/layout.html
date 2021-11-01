@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="{% static 'resume/css/main.css'%}">
+	<link rel="stylesheet" type="text/css" href="resume/css/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+	{% block style %}{% endblock %}
+	{% block title %}{% endblock %}
+</head>
+<body>
+	 {% if messages %}
+        <div class="messages">
+            <ul class="messages">
+            <!-- {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }} message-text"{% endif %}>{{ message }}</li>
+            {% endfor %} -->
+            </ul>
+        </div>
+    {% endif %}
+    <header>
+        <div class="header">
+            <a href="#"><img src="{% static 'resumes/images/logo.png' %}" class="logo"></a>
+            <div class="header-left">
+                <a href="#">My Resumes</a>
+                <a href="#">Profile</a>
+                <a href="#">Templates</a>
+            </div>
+            <div class="header-right">
+                <div class="dropdown">
+                    <div class="dropbtn">
+                        <span class="profile-pic-small">
+                            <img src="{{ user.profile.profile_pic.url }}">
+                        </span>
+                        <span class="username">{{ user.username }}</span><i class="fa fa-caret-down"> </i>
+                    </div>
+                    <div class="dropdown-content">
+	                    <a href="#">FAQ</a>
+	                    <a href="{% url 'logout' %}">Logout</a>
+                </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    {% block subheader %}{% endblock %}
+
+    <div class="main-content">
+        {% block popup %}{% endblock %}
+        {% block content %}{% endblock %}
+    </div>
+
+<script src="{% static 'resumes/js/jquery-3.3.1.js' %}"></script>
+<script src="{% static 'resumes/js/jquery-ui.js' %}"></script>
+<script src="{% static 'resumes/js/jquery.formset.js' %}"></script>
+<script src="{% static '/js/tinymce/tinymce.min.js' %}"></script>
+<!-- <script src="{% static 'resumes/js/scripts.js' %}"></script> -->
+    
+</body>
+</html>

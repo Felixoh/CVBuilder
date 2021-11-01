@@ -1,0 +1,56 @@
+{% extends 'resume/layout.html' %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}<title>CV Builder| Resume Info</title>{% endblock %}
+{% block subheader %}
+    <form action="" method="POST">{% csrf_token %}
+        {{ wizard.management_form }}
+        <div class="sub-header">
+            <ul>
+                <li><button name="wizard_goto_step" type="submit" value="resumes" class="active">1. Resume Info</button></li>
+                <li><button name="wizard_goto_step" type="submit" value="work_experience">2. Work Experience</button></li>
+                <li><button name="wizard_goto_step" type="submit" value="certifications">3. Certifications</button></li>
+                <li><button name="wizard_goto_step" type="submit" value="education">4. Education</button></li>
+                <li><button name="wizard_goto_step" type="submit" value="skills">5. Skills</button></li>
+                <li><button name="wizard_goto_step" type="submit" value="languages">6. Languages</button></li>
+            </ul>
+        </div>
+    </form>
+{% endblock %}
+
+{% block content %}
+    <form action="" class="form-labels-on-top" method="POST">{% csrf_token %}
+    <p class="step-text">Step {{ wizard.steps.step1 }} of {{ wizard.steps.count }}</p>
+        <div class="form-title-row">
+            <h1>Resume Info</h1>
+            <div class="tooltip">
+                <i class="far fa-question-circle"></i>
+                <span class="tool-tip-text">
+                    Please choose a unique name for this resume.
+                    This will help you stay organized. Especially if you are creating more than one resume.
+                </span>
+            </div>
+        </div>
+        {{ wizard.management_form }}
+        {% if wizard.form.forms %}
+            {{ wizard.form.management_form }}
+            {% for form in wizard.form.forms %}
+                <div class="form-row">
+                {{ form.as_p }}
+                </div>
+        {% endfor %}
+        {% else %}
+            <div class="form-row">
+            {{ wizard.form.as_p }}
+            </div>
+        {% endif %}
+    <div class="form-row">
+        {% if wizard.steps.prev %}
+            <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}">{% trans "Previous" %}</button>
+            <button name="wizard_goto_step" type="submit" value="{{ wizard.steps1 }}">{% trans "Step 1" %}</button>
+        {% endif %}
+        <button type="submit" class="form-button">Next</button>
+    </div>
+    </form>
+{% endblock %}

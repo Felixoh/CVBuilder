@@ -32,13 +32,24 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'resume',
+    'formtools',
+    'django_countries',
+    'tinymce',
+
+    #Accounts management 
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 ]
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -81,7 +92,7 @@ DATABASES = {
     # }
     'default' :{
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME':'CVBuilder',
+        'NAME':'CVBuilding',
         'USER':'postgres',
         'PASSWORD':'felix',
         'HOST': 'localhost',
@@ -108,6 +119,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'resume.User'
+LOGIN_REDIRECT_URL = 'home'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
