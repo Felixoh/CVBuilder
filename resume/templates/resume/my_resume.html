@@ -1,6 +1,6 @@
 {% extends 'resume/layout.html' %}
 {% load static %}
-{% block title %}<title>EZResume | My Resumes</title>{% endblock %}
+{% block title %}<title>CV Builder | My Resumes</title>{% endblock %}
 {% block content %}
     <div class="wrapper">
     {% for resume in resumes %}
@@ -8,7 +8,11 @@
             <div class="container">
                 <p class="resume-name">{{ resume.name }}</p>
                 <p>Created on {{ resume.created_at }}</p>
+
                 <div class="button-row">
+                    <a href="{% url 'delete-resume' pk=resume.id %}" class="confirm-delete">Delete</a>
+                    <a href="{% url 'edit-resume' pk=resume.id %}" class="edit-resume">Edit</a>
+
                     <a href="#" class="confirm-delete">Delete</a>
                     <a href="#" class="edit-resume">Edit</a>
                     <a href="#" class="view-resume">View</a>

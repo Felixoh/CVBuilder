@@ -47,12 +47,17 @@ class ResumeForm(ModelForm):
 
 
 class WorkExperienceForm(ModelForm):
-	#Mod
+	#Modify to add more attributes
+	start_date = forms.DateField(required=False, input_formats=settings.DATE_INPUT_FORMATS,
+                           widget=forms.DateInput(format='%d/%m/%Y', attrs={'class': 'date-picker', 'placeholder': 'DD/MM/YYYY'}))
+	end_date = forms.DateField(required=False, input_formats=settings.DATE_INPUT_FORMATS,
+                         widget=forms.DateInput(format='%d/%m/%Y', attrs={'class': 'date-picker', 'placeholder': 'DD/MM/YYYY'}))
+
 	class Meta:
 		model = WorkExperience
 		fields = ['position','employer','city','start_date','end_date','achievements']
 		widgets = {'achievements': TinyMCE(attrs={'class': 'objective-box', 'cols': 50, 'rows': 10}),
-                   'position': TextInput(attrs={'placeholder': 'Example: Manager'}),
+                   'position': forms.TextInput(attrs={'placeholder': 'Example: Manager'}),
                    'company': TextInput(attrs={'placeholder': 'Example: KCB'}),
                    'city': TextInput(attrs={'placeholder': 'For example: Mombasa'}),
                    'resume': forms.HiddenInput(), }
@@ -172,7 +177,7 @@ class CustomUserChangeForm(forms.ModelForm):
         fields = ('first_name', 'last_name', )
         widgets = {'first_name': TextInput(attrs={'placeholder': 'What is your first name?'}),
                    'last_name': TextInput(attrs={'placeholder': 'What is your last name?'}), }
-                   
+
 ### Profile Updating Form
 # class ProfileUpdateForm(ModelForm):
 #     class Meta:

@@ -16,6 +16,8 @@ TEMPLATES = {'resumes': 'resume/resume.html',
              'skills': 'resume/skills.html',
              'languages': 'resume/languages.html',}
 
+FORM_TYPES = ('work_experience', 'certifications', 'education', 'skills', 'languages')
+
 from .models import Resume, WorkExperience, Certification, Education, Skill, Language
 from .forms import ChooseForm ,CustomUserCreationForm
 from .forms import (ResumeForm, WorkExperienceFormSet, CertificationFormSet,
@@ -32,12 +34,24 @@ FORMS = [('resumes', ResumeForm),
 # Create your views here.
 def home(request):
 
-	return render(request,'resume/my_resume.html')
+	return render(request,'resume/layout.html')
+
+def base(request):
+	
+	return render(request,'resume/base.html')
 
 def my_resumes(request):
     user = request.user
     resumes = Resume.objects.filter(user=user).order_by('-created_at')
-    return render(request, 'resumes/my_resumes.html', {'resumes': resumes})
+    return render(request, 'resume/my_resume.html', {'resumes': resumes})
+
+def dict_has_data(input_dict):
+    has_data = False
+    for key in input_dict:
+        if input_dict[key]:
+            has_data = True
+            break
+    return has_data
 
 def register(request):
     if request.method == 'POST':
@@ -48,6 +62,13 @@ def register(request):
     else:
         form = CustomUserCreationForm()
     return render(request, 'users/register.html', {'form': form})
+
+def delete_resume(request, pk):
+    resume = Resume.objects.get(pk=pk)
+    resume.delete()
+    messages.success(request, "Your resume has been deleted!")
+    return HttpResponseRedirect(reverse('my-resumes'))
+
 
 class ResumeWizard(LoginRequiredMixin,SessionWizardView):
 	login_url = '/login/'
@@ -102,3 +123,31 @@ class ResumeWizard(LoginRequiredMixin,SessionWizardView):
 	def get_template_names(self):
 		return [TEMPLATES[self.steps.current]]
 
+	def done(self, form_list, **kwargs):
+		user = self.request.user
+		resume_form_data = self.get_cleaned_data_for_step('resumes')
+		resume_name = resume_form_data['name']
+		if 'pk' in self.kwargs:
+		    pk = self.kwargs['pk']
+		else:
+		    pk = None
+		resume, created = Resume.objects.update_or_create(id=pk, defaults={'user': user,
+		                                                                   'name': resume_name, })
+
+		for form_name in FORM_TYPES:
+		    form_data_list = self.get_cleaned_data_for_step(form_name)
+		    for form_data in form_data_list:
+		        if not dict_has_data(form_data):
+		            continue
+		        form_data['resume'] = resume
+
+		        form_instance = self.get_form(step=form_name)
+		        obj = form_data.pop('id')
+		        if obj:
+		            form_instance.model.objects.filter(id=obj.id).update(**form_data)
+		        else:
+		            form_instance.model.objects.create(**form_data)
+
+		messages.add_message(self.request, messages.SUCCESS, 'Resume has been saved!')
+
+		return HttpResponseRedirect(reverse('my-resumes'))

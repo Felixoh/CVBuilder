@@ -17,14 +17,15 @@
 	<link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 	{% block style %}{% endblock %}
 	{% block title %}{% endblock %}
+    
 </head>
 <body>
 	 {% if messages %}
         <div class="messages">
             <ul class="messages">
-            <!-- {% for message in messages %}
+            {% for message in messages %}
                 <li{% if message.tags %} class="{{ message.tags }} message-text"{% endif %}>{{ message }}</li>
-            {% endfor %} -->
+            {% endfor %}
             </ul>
         </div>
     {% endif %}
@@ -32,7 +33,7 @@
         <div class="header">
             <a href="#"><img src="{% static 'resumes/images/logo.png' %}" class="logo"></a>
             <div class="header-left">
-                <a href="#">My Resumes</a>
+                <a href="{% url 'my-resumes' %}">My Resumes</a>
                 <a href="#">Profile</a>
                 <a href="#">Templates</a>
             </div>
@@ -59,11 +60,11 @@
         {% block content %}{% endblock %}
     </div>
 
-<script src="{% static 'resumes/js/jquery-3.3.1.js' %}"></script>
-<script src="{% static 'resumes/js/jquery-ui.js' %}"></script>
-<script src="{% static 'resumes/js/jquery.formset.js' %}"></script>
+<script src="{% static 'resume/js/jquery-3.3.1.js' %}"></script>
+<script src="{% static 'resume/js/jquery-ui.js' %}"></script>
+<script src="{% static 'resume/js/jquery.formset.js' %}"></script>
 <script src="{% static '/js/tinymce/tinymce.min.js' %}"></script>
-<!-- <script src="{% static 'resumes/js/scripts.js' %}"></script> -->
+<script src="{% static 'resume/js/scripts.js' %}"></script>
     
 </body>
 </html>
