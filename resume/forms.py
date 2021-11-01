@@ -13,6 +13,7 @@ from django.contrib.auth.password_validation import validate_password
 from django.forms import ModelForm
 from django.forms import BaseModelFormSet
 from django.forms import modelformset_factory
+from tinymce.widgets import TinyMCE
 
 from .models import Resume,WorkExperience,Education,Certification,Skill,Language,Interests
 
@@ -50,13 +51,12 @@ class WorkExperienceForm(ModelForm):
 	class Meta:
 		model = WorkExperience
 		fields = ['position','employer','city','start_date','end_date','achievements']
-		widgets = {'position':forms.TextInput(attrs={'class':'form-control'}),
-					'employer':forms.TextInput(attrs={'class':'form-control'}),
-					'city':forms.TextInput(attrs={'class':'form-control'}),
-					'start_date':forms.TextInput(attrs={'class':'form-control'}),
-					'end_date':forms.TextInput(attrs={'class':'form-control'}),
-					'achievements':forms.TextInput(attrs={'class':'form-control'}),
-				}
+		widgets = {'achievements': TinyMCE(attrs={'class': 'objective-box', 'cols': 50, 'rows': 10}),
+                   'position': TextInput(attrs={'placeholder': 'Example: Manager'}),
+                   'company': TextInput(attrs={'placeholder': 'Example: KCB'}),
+                   'city': TextInput(attrs={'placeholder': 'For example: Mombasa'}),
+                   'resume': forms.HiddenInput(), }
+
 WorkExperienceFormSet = modelformset_factory(WorkExperience, form=WorkExperienceForm, formset=MyModelFormSet, extra=1,max_num=5)
 
 
@@ -64,13 +64,14 @@ class EducationForm(ModelForm):
 	class Meta:
 		model = Education
 		fields = ['school', 'degree', 'major', 'gpa', 'city', 'start_date', 'end_date', 'resume', ]
-		widgets = {'school': forms.TextInput(attrs={'placeholder': 'For example: University of San Francisco'}),
+		widgets = {'school': forms.TextInput(attrs={'placeholder': 'Example: Kibabii University :','class':'form-control'}),
 		       'degree': forms.TextInput(attrs={'class': 'form-control'}),
 		       'major': forms.TextInput(attrs={'class': 'form-control'}),
 		       'gpa': forms.NumberInput(attrs={'class': 'form-control'}),
 		       'city': forms.TextInput(attrs={'class': 'form-control'}),
 		       'resume': forms.HiddenInput(),}
-		labels = {'gpa': 'GPA'}
+
+		labels = {'gpa': 'Grade'}
 		
 
 EducationFormSet = modelformset_factory(Education,form=EducationForm,formset=MyModelFormSet,max_num=3)
@@ -104,10 +105,11 @@ class CertificationForm(ModelForm):
     class Meta:
         model = Certification
         fields = ['name', 'date_obtained', 'city', 'resume', ]
-        widgets = {'name': forms.TextInput(attrs={'placeholder': 'For example: Certified Technical Architect'}),
-                   'city': forms.TextInput(attrs={'placeholder': 'For example: New York'}),
+        widgets = {'name': forms.TextInput(attrs={'placeholder': 'Example : Certified Data Analyst','class':'form-control'}),
+                   'city': forms.TextInput(attrs={'placeholder': 'Example: Nairobi ','class':'form-control'}),
                    'resume': forms.HiddenInput(), }
-        labels = {'name': 'Certification name'}
+
+        labels = {'name': 'Certification Name'}
 
 
 CertificationFormSet = modelformset_factory(Certification, form=CertificationForm, formset=MyModelFormSet, max_num=5)
@@ -170,7 +172,7 @@ class CustomUserChangeForm(forms.ModelForm):
         fields = ('first_name', 'last_name', )
         widgets = {'first_name': TextInput(attrs={'placeholder': 'What is your first name?'}),
                    'last_name': TextInput(attrs={'placeholder': 'What is your last name?'}), }
-
+                   
 ### Profile Updating Form
 # class ProfileUpdateForm(ModelForm):
 #     class Meta:
@@ -182,7 +184,7 @@ class CustomUserChangeForm(forms.ModelForm):
 #                    'address2': TextInput(attrs={'placeholder': 'Neighborhood or sub-district'}),
 #                    'city': TextInput(attrs={'placeholder': 'What city do you live in?'}),
 #                    'phone_number': TextInput(attrs={'placeholder': 'What is your mobile number?', }),
-#                    'linked_in': TextInput(attrs={'placeholder': 'What is your LinkedIn profile?'}), }
+#                    'linked_in': TextInput(attrs={'placeholder': 'What is your Social Media profile?'}), }
 #         labels = {"linked_in": "LinkedIn profile",
 #                   "phone_number": "Mobile number",
 #                   "profile_pic": "Profile picture",

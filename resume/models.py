@@ -35,7 +35,7 @@ class WorkExperience(models.Model):
 	employer = models.CharField(max_length=255,blank=True)
 	city = models.CharField(max_length=255,blank=True)
 	start_date = models.DateField(null=True,blank=True)
-	end_date = models.DateTimeField(null=True,blank=True)
+	end_date = models.DateField(null=True,blank=True)
 	achievements = models.TextField(blank=True)
 
 	def __str__(self):
