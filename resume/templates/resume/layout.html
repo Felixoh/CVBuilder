@@ -34,7 +34,7 @@
             <a href="#"><img src="{% static 'resumes/images/logo.png' %}" class="logo"></a>
             <div class="header-left">
                 <a href="{% url 'my-resumes' %}">My Resumes</a>
-                <a href="#">Profile</a>
+                <a href="{% url 'edit-profile' %}">Profile</a>
                 <a href="#">Templates</a>
             </div>
             <div class="header-right">
@@ -59,7 +59,7 @@
         {% block popup %}{% endblock %}
         {% block content %}{% endblock %}
     </div>
-
+    
 <script src="{% static 'resume/js/jquery-3.3.1.js' %}"></script>
 <script src="{% static 'resume/js/jquery-ui.js' %}"></script>
 <script src="{% static 'resume/js/jquery.formset.js' %}"></script>

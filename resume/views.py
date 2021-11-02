@@ -19,7 +19,7 @@ TEMPLATES = {'resumes': 'resume/resume.html',
 FORM_TYPES = ('work_experience', 'certifications', 'education', 'skills', 'languages')
 
 from .models import Resume, WorkExperience, Certification, Education, Skill, Language
-from .forms import ChooseForm ,CustomUserCreationForm
+from .forms import ChooseForm ,CustomUserCreationForm,CustomUserChangeForm,ProfileUpdateForm
 from .forms import (ResumeForm, WorkExperienceFormSet, CertificationFormSet,
                     EducationFormSet, SkillFormSet, LanguageFormSet)
 
@@ -32,6 +32,7 @@ FORMS = [('resumes', ResumeForm),
 
 
 # Create your views here.
+@login_required(login_url='login')
 def home(request):
 
 	return render(request,'resume/layout.html')
@@ -69,6 +70,22 @@ def delete_resume(request, pk):
     messages.success(request, "Your resume has been deleted!")
     return HttpResponseRedirect(reverse('my-resumes'))
 
+def edit_profile(request):
+    if request.method == 'POST':
+        u_form = CustomUserChangeForm(request.POST, instance=request.user)
+        p_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, 'Your profile has been saved!')
+            return HttpResponseRedirect(reverse('resumes:edit-profile'))
+    else:
+        u_form = CustomUserChangeForm(instance=request.user)
+        p_form = ProfileUpdateForm(instance=request.user.profile)
+    context = {'p_form': p_form,
+               'u_form': u_form,
+               }
+    return render(request, 'resume/profile.html', context)
 
 class ResumeWizard(LoginRequiredMixin,SessionWizardView):
 	login_url = '/login/'

@@ -8,6 +8,7 @@ from django.forms import TextInput
 from django.contrib.auth.forms import UserCreationForm
 from .models import User
 from django.contrib.auth.password_validation import validate_password
+
 ############################
 
 from django.forms import ModelForm
@@ -15,7 +16,7 @@ from django.forms import BaseModelFormSet
 from django.forms import modelformset_factory
 from tinymce.widgets import TinyMCE
 
-from .models import Resume,WorkExperience,Education,Certification,Skill,Language,Interests
+from .models import Resume,WorkExperience,Education,Certification,Skill,Language,Interests,Profile
 
 class ChooseForm(forms.Form):
 	RESUME_CHOICES = (
@@ -179,22 +180,22 @@ class CustomUserChangeForm(forms.ModelForm):
                    'last_name': TextInput(attrs={'placeholder': 'What is your last name?'}), }
 
 ### Profile Updating Form
-# class ProfileUpdateForm(ModelForm):
-#     class Meta:
-#         model = Profile
-#         fields = ['job_title', 'address', 'address2', 'city', 'country', 'phone_number', 'linked_in', 'objective',
-#                   'profile_pic', ]
-#         widgets = {'job_title': TextInput(attrs={'placeholder': 'What is your desired job title?'}),
-#                    'address': TextInput(attrs={'placeholder': 'What is your home street address?'}),
-#                    'address2': TextInput(attrs={'placeholder': 'Neighborhood or sub-district'}),
-#                    'city': TextInput(attrs={'placeholder': 'What city do you live in?'}),
-#                    'phone_number': TextInput(attrs={'placeholder': 'What is your mobile number?', }),
-#                    'linked_in': TextInput(attrs={'placeholder': 'What is your Social Media profile?'}), }
-#         labels = {"linked_in": "LinkedIn profile",
-#                   "phone_number": "Mobile number",
-#                   "profile_pic": "Profile picture",
-#                   "objective": "Career objective",
-#                   "address2": "Address", }
+class ProfileUpdateForm(ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['job_title', 'address', 'address2', 'city', 'country', 'phone_number', 'linked_in', 'objective',
+                  'profile_pic', ]
+        widgets = {'job_title': TextInput(attrs={'placeholder': 'What is your desired job title?'}),
+                   'address': TextInput(attrs={'placeholder': 'What is your home street address?'}),
+                   'address2': TextInput(attrs={'placeholder': 'Neighborhood or sub-district'}),
+                   'city': TextInput(attrs={'placeholder': 'What city do you live in?'}),
+                   'phone_number': TextInput(attrs={'placeholder': 'What is your mobile number?', }),
+                   'linked_in': TextInput(attrs={'placeholder': 'What is your Social Media profile?'}), }
+        labels = {"linked_in": "LinkedIn profile",
+                  "phone_number": "Mobile number",
+                  "profile_pic": "Profile picture",
+                  "objective": "Career objective",
+                  "address2": "Address", }
 
 
 class OrderForm(forms.Form):
