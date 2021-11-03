@@ -31,11 +31,11 @@ FORMS = [('resumes', ResumeForm),
          ('languages', LanguageFormSet),]
 
 
-# Views logic with Protected access Functionalities
 def base(request):
 
 	return render(request,'resume/base.html')
 
+#Only Authenticated Users can access the protected Pages.
 @login_required(login_url='login')
 def home(request):
 
@@ -116,8 +116,6 @@ class ResumeWizard(LoginRequiredMixin,SessionWizardView):
 		if 'pk' in self.kwargs:
 			return {}
 		return self.initial_dict.get(step, {})
-
-
 
 	def get_form_instance(self, step):
 		if 'pk' in self.kwargs:

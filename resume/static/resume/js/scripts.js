@@ -17,4 +17,3 @@ $(document).on('focus', '.date-picker',function(){
         defaultDate: '01/01/2018',
     })
 });
-
