@@ -108,7 +108,7 @@ class Interests(models.Model):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     job_title = models.CharField(max_length=255, blank=True)
     phone_number = models.CharField(max_length=255, blank=True)
     address = models.CharField(max_length=255, blank=True)

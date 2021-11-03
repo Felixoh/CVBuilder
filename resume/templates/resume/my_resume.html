@@ -12,10 +12,8 @@
                 <div class="button-row">
                     <a href="{% url 'delete-resume' pk=resume.id %}" class="confirm-delete">Delete</a>
                     <a href="{% url 'edit-resume' pk=resume.id %}" class="edit-resume">Edit</a>
-
-                    <a href="#" class="confirm-delete">Delete</a>
-                    <a href="#" class="edit-resume">Edit</a>
                     <a href="#" class="view-resume">View</a>
+
                 </div> 
             </div>
         </div>
@@ -23,13 +21,13 @@
         <div class="empty-state-box">
             <img src="{% static 'resume/images/resume-empty-icon.png' %}" class="centered">
             <p class="empty-state-text"><b>You do not have any Resumes now </b><br>Create one and
-                start building your  first resume</p>
+                start building your  First Resume Page</p>
         </div>
 
     {% endfor %}
         <div class="button-box btn-md" style="border-radius: 10px;">
             <a href="{% url 'create-resume' %}" class="button btn-info">Create Resume</a>
         </div>
-
+        
     </div>
 {% endblock %}

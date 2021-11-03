@@ -37,6 +37,11 @@ def home(request):
 
 	return render(request,'resume/layout.html')
 
+def choose(request,pk):
+	user = request.user
+	pp_url = user.profile.profile_pic.url.strip('/')
+	resume = Resume.objects.get(pk=pk)
+	
 def base(request):
 	
 	return render(request,'resume/base.html')
@@ -58,7 +63,10 @@ def register(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
+        	#Do some action before saving the user to the database
             user = form.save(commit=False)
+            user.is_active = True
+            user.save()
             return redirect('home')
     else:
         form = CustomUserCreationForm()
@@ -78,7 +86,7 @@ def edit_profile(request):
             u_form.save()
             p_form.save()
             messages.success(request, 'Your profile has been saved!')
-            return HttpResponseRedirect(reverse('resumes:edit-profile'))
+            return HttpResponseRedirect(reverse('edit-profile'))
     else:
         u_form = CustomUserChangeForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
