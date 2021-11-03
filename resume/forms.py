@@ -9,8 +9,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import User
 from django.contrib.auth.password_validation import validate_password
 
-############################
-
+################# Vendor Forms ######################
 from django.forms import ModelForm
 from django.forms import BaseModelFormSet
 from django.forms import modelformset_factory
@@ -26,7 +25,6 @@ class ChooseForm(forms.Form):
 	    ('rome', 'Rome'),
 	    ('sf', 'San Francisco'),
     )
-
 	resume_template = forms.ChoiceField(choices=RESUME_CHOICES)
 
 
@@ -48,7 +46,7 @@ class ResumeForm(ModelForm):
 
 
 class WorkExperienceForm(ModelForm):
-	#Modify to add more attributes
+	#Modify how the data will be formatted in the  
 	start_date = forms.DateField(required=False, input_formats=settings.DATE_INPUT_FORMATS,
                            widget=forms.DateInput(format='%d/%m/%Y', attrs={'class': 'date-picker', 'placeholder': 'DD/MM/YYYY'}))
 	end_date = forms.DateField(required=False, input_formats=settings.DATE_INPUT_FORMATS,
@@ -156,7 +154,7 @@ class CustomUserCreationForm(UserCreationForm):
     def clean_password1(self):
         password1 = self.cleaned_data['password1']
         if validate_password(password1):
-            raise forms.ValidationError('This password is not valid')
+            raise forms.ValidationError('This password is not valid please give a more secure password')
         return password1
 
     def clean(self, *args, **kwargs):
@@ -185,9 +183,9 @@ class ProfileUpdateForm(ModelForm):
         model = Profile
         fields = ['job_title', 'address', 'address2', 'city', 'country', 'phone_number', 'linked_in', 'objective',
                   'profile_pic', ]
-        widgets = {'job_title': TextInput(attrs={'placeholder': 'What is your desired job title?'}),
-                   'address': TextInput(attrs={'placeholder': 'What is your home street address?'}),
-                   'address2': TextInput(attrs={'placeholder': 'Neighborhood or sub-district'}),
+        widgets = {'job_title': TextInput(attrs={'placeholder': 'Desired job title?'}),
+                   'address': TextInput(attrs={'placeholder': 'Home street address?'}),
+                   'address2': TextInput(attrs={'placeholder': 'Sub-County '}),
                    'city': TextInput(attrs={'placeholder': 'What city do you live in?'}),
                    'phone_number': TextInput(attrs={'placeholder': 'What is your mobile number?', }),
                    'linked_in': TextInput(attrs={'placeholder': 'What is your Social Media profile?'}), }
@@ -195,25 +193,4 @@ class ProfileUpdateForm(ModelForm):
                   "phone_number": "Mobile number",
                   "profile_pic": "Profile picture",
                   "objective": "Career objective",
-                  "address2": "Address", }
-
-
-class OrderForm(forms.Form):
-    pass
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                  "address2": "Address",}

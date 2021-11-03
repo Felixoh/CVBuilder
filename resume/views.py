@@ -31,12 +31,17 @@ FORMS = [('resumes', ResumeForm),
          ('languages', LanguageFormSet),]
 
 
-# Create your views here.
+# Views logic with Protected access Functionalities
+def base(request):
+
+	return render(request,'resume/base.html')
+
 @login_required(login_url='login')
 def home(request):
 
 	return render(request,'resume/layout.html')
 
+@login_required
 def choose(request,pk):
 	user = request.user
 	pp_url = user.profile.profile_pic.url.strip('/')
@@ -51,10 +56,8 @@ def choose(request,pk):
 
 	return render(request, 'resume/choose.html', {'form': form, 'resume': resume})
 
-def base(request):
 
-	return render(request,'resume/base.html')
-
+@login_required
 def my_resumes(request):
     user = request.user
     resumes = Resume.objects.filter(user=user).order_by('-created_at')
@@ -81,12 +84,14 @@ def register(request):
         form = CustomUserCreationForm()
     return render(request, 'users/register.html', {'form': form})
 
+@login_required
 def delete_resume(request, pk):
     resume = Resume.objects.get(pk=pk)
     resume.delete()
     messages.success(request, "Your resume has been deleted!")
     return HttpResponseRedirect(reverse('my-resumes'))
 
+@login_required
 def edit_profile(request):
     if request.method == 'POST':
         u_form = CustomUserChangeForm(request.POST, instance=request.user)
@@ -111,6 +116,8 @@ class ResumeWizard(LoginRequiredMixin,SessionWizardView):
 		if 'pk' in self.kwargs:
 			return {}
 		return self.initial_dict.get(step, {})
+
+
 
 	def get_form_instance(self, step):
 		if 'pk' in self.kwargs:
@@ -165,6 +172,7 @@ class ResumeWizard(LoginRequiredMixin,SessionWizardView):
 		    pk = self.kwargs['pk']
 		else:
 		    pk = None
+
 		resume, created = Resume.objects.update_or_create(id=pk, defaults={'user': user,
 		                                                                   'name': resume_name, })
 

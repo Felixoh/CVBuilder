@@ -1,18 +1,16 @@
 from django.db import models
-#from django.contrib.auth.models import User
+from django.conf import settings
 
-############### User Data Collection #############
+#from django.contrib.auth.models import User //Invalid For now
+
+############### User Data  #############
 from django_countries.fields import CountryField
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from tinymce.models import HTMLField
 from django_resized import ResizedImageField
-##################################################
 
-from django.conf import settings
-
-################# Resume Models ##################
-
+################# Resume Models + User Accounts Management  ##################
 class User(AbstractUser):
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
@@ -104,10 +102,7 @@ class Interests(models.Model):
 	def __str__(self):
 		return self.name
 
-########## User Management Models Here
-
-
-
+########## User Management Models ################################
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     job_title = models.CharField(max_length=255, blank=True)
@@ -118,7 +113,7 @@ class Profile(models.Model):
     country = CountryField(blank_label='(Select country)', blank=True)
     linked_in = models.CharField(max_length=255, blank=True)
     objective = HTMLField(blank=True)
-    profile_pic = ResizedImageField(size=[300, 300], quality=100, default="profile-pics/default.jpg", upload_to="profile-pics")
+    profile_pic = ResizedImageField(size=[250, 250], quality=100, default="profile-pics/default.jpg", upload_to="profile-pics")
     sub_expires_on = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
