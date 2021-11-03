@@ -14,22 +14,25 @@ from django.contrib.sitemaps.views import sitemap
 
 
 urlpatterns = [
+	#base Page Routes
 	path('',views.home,name='home'),
 	path('base',views.base,name='base'),
 	path('resumes/', views.my_resumes, name='my-resumes'),
 
+	#Resume Routes
 	path('resume/create/',ResumeWizard.as_view(views.FORMS), name='create-resume'),
 	path('edit/resume/<int:pk>/', views.ResumeWizard.as_view(views.FORMS), name='edit-resume'),
 	path('delete/<int:pk>/', views.delete_resume, name='delete-resume'),
+	path('resume/<int:pk>/choose/', views.choose, name='choose'),
+	path('resume/<int:pk>/view-resume/', views.choose, name='view-resume'),
 
-	# path('resume/<int:pk>/choose/', views.choose, name='choose'),
-
+	#Login and Authentication Routes
 	path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
 	path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
 	path('edit-profile/', views.edit_profile, name='edit-profile'),
-
 	path('register/', views.register, name='register'),
 	path('accounts/', include('allauth.urls')),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

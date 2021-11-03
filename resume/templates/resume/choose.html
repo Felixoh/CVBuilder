@@ -1,0 +1,118 @@
+{% extends 'resume/layout.html' %}
+{% load static %}
+{% block style %}
+    <style>
+
+    input[type=radio] {
+        display: none;
+    }
+
+    input#id_resume_template_0[type=radio]+label {
+        background-image: url("{% static 'resume/images/jakarta-resume-small.jpg' %}");
+        border: lightslategray solid 1px;
+        height: 253px;
+        width: 223px;
+        display: inline-block;
+        margin: 1.5em;
+    }
+
+    input#id_resume_template_1[type=radio]+label {
+        background-image: url("{% static 'resume/images/new-york-resume-small.jpg' %}");
+        border: lightslategray solid 1px;
+        height: 253px;
+        width: 223px;
+        display: inline-block;
+        margin: 1.5em;
+    }
+
+    input#id_resume_template_2[type=radio]+label {
+        background-image: url("{% static 'resume/images/tokyo-resume-small.jpg' %}");
+        border: lightslategray solid 1px;
+        height: 253px;
+        width: 223px;
+        display: inline-block;
+        margin: 1.5em;
+    }
+
+    input#id_resume_template_3[type=radio]+label {
+        background-image: url("{% static 'resume/images/rome-resume-small.jpg' %}");
+        border: lightslategray solid 1px;
+        height: 253px;
+        width: 223px;
+        display: inline-block;
+        margin: 1.5em;
+    }
+
+    input#id_resume_template_4[type=radio]+label {
+        background-image: url("{% static 'resume/images/sf-resume-small.jpg' %}");
+        border: lightslategray solid 1px;
+        height: 253px;
+        width: 223px;
+        display: inline-block;
+        margin: 1.5em;
+    }
+
+    input#id_resume_template_0[type=radio]:checked+label {
+        border: deeppink solid 4px;
+        height: 253px;
+        width: 223px;
+        display: inline-block;
+        margin: 1.5em;
+    }
+
+    input#id_resume_template_1[type=radio]:checked+label {
+        border: deeppink solid 4px;
+        height: 253px;
+        width: 223px;
+        display: inline-block;
+        margin: 1.5em;
+    }
+
+    input#id_resume_template_2[type=radio]:checked+label {
+        border: deeppink solid 4px;
+        height: 253px;
+        width: 223px;
+        display: inline-block;
+        margin: 1.5em;
+    }
+
+    input#id_resume_template_3[type=radio]:checked+label {
+        border: deeppink solid 4px;
+        height: 253px;
+        width: 223px;
+        display: inline-block;
+        margin: 1.5em;
+    }
+
+    input#id_resume_template_4[type=radio]:checked+label {
+        border: deeppink solid 4px;
+        height: 253px;
+        width: 223px;
+        display: inline-block;
+        margin: 1.5em;
+    }
+
+    </style>
+
+{% endblock %}
+
+{% block title %}<title>CV Builder | Templates</title>{% endblock %}
+{% block subheader %}
+    <div class="sub-header">
+        <h1>Choose Your Preferred Resume Template </h1>
+    </div>
+{% endblock %}
+{% block content %}
+    <div class="form-labels-on-top-small templates-page">
+        <form method="post" action="{% url 'view-resume' pk=resume.id %}">
+            {% csrf_token %}
+            <input type="radio" name='resume_template' id="id_resume_template_3" value="rome" /><label for="id_resume_template_3"></label>
+            <div>
+                {{ form.errors.resume_template }}
+                <button type="submit" name="view-resume" class="button">View my resume</button>
+                <button type="submit" name="export-resume" class="button">PDF my resume</button>
+            </div>
+
+        </form>
+    </div>
+{% endblock %}

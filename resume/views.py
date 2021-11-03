@@ -41,9 +41,18 @@ def choose(request,pk):
 	user = request.user
 	pp_url = user.profile.profile_pic.url.strip('/')
 	resume = Resume.objects.get(pk=pk)
-	
+	form = ChooseForm(request.POST)
+
+	if request.method == 'GET':
+		form = ChooseForm()
+	elif request.method == 'POST' and 'view-resume' in request.POST:
+		if form.is_valid() and form.cleaned_data['resume_template'] == 'rome':
+			return render(request, 'resume/rome.html', {'form': form, 'resume': resume, 'pp_url': pp_url})
+
+	return render(request, 'resume/choose.html', {'form': form, 'resume': resume})
+
 def base(request):
-	
+
 	return render(request,'resume/base.html')
 
 def my_resumes(request):

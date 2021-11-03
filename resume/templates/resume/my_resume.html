@@ -12,7 +12,7 @@
                 <div class="button-row">
                     <a href="{% url 'delete-resume' pk=resume.id %}" class="confirm-delete">Delete</a>
                     <a href="{% url 'edit-resume' pk=resume.id %}" class="edit-resume">Edit</a>
-                    <a href="#" class="view-resume">View</a>
+                    <a href="{% url 'choose' pk=resume.id %}" class="view-resume">View</a>
 
                 </div> 
             </div>
@@ -28,6 +28,6 @@
         <div class="button-box btn-md" style="border-radius: 10px;">
             <a href="{% url 'create-resume' %}" class="button btn-info">Create Resume</a>
         </div>
-        
+
     </div>
 {% endblock %}

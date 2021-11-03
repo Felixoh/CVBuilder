@@ -1,17 +1,18 @@
 from django.db import models
 #from django.contrib.auth.models import User
 
-############### User Imports ##################
+############### User Data Collection #############
 from django_countries.fields import CountryField
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from tinymce.models import HTMLField
 from django_resized import ResizedImageField
-##############################################
+##################################################
 
 from django.conf import settings
 
-########## Resume Models ######################3
+################# Resume Models ##################
+
 class User(AbstractUser):
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now=True)
