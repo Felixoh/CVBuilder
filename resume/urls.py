@@ -20,6 +20,7 @@ urlpatterns = [
 
 	# Resume Routes
 	path('resumes/', views.my_resumes, name='my-resumes'),
+	path('templates/', views.templates, name='templates'),
 	path('resume/create/',ResumeWizard.as_view(views.FORMS), name='create-resume'),
 	path('edit/resume/<int:pk>/', views.ResumeWizard.as_view(views.FORMS), name='edit-resume'),
 	path('delete/<int:pk>/', views.delete_resume, name='delete-resume'),

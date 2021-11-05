@@ -5,9 +5,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from formtools.wizard.views import SessionWizardView
 from django.views import View
 
+
+import pdfcrowd
+from django.http import HttpResponseRedirect, HttpResponse
 from django.http import HttpResponseRedirect, HttpResponse
 from django.template.loader import render_to_string
 from django.urls import reverse
+
 
 TEMPLATES = {'resumes': 'resume/resume.html',
              'work_experience': 'resume/work_experience.html',
@@ -50,12 +54,37 @@ def choose(request,pk):
 
 	if request.method == 'GET':
 		form = ChooseForm()
+
 	elif request.method == 'POST' and 'view-resume' in request.POST:
 		if form.is_valid() and form.cleaned_data['resume_template'] == 'rome':
 			return render(request, 'resume/rome.html', {'form': form, 'resume': resume, 'pp_url': pp_url})
+		if form.is_valid() and form.cleaned_data['resume_template'] == 'sf':
+			return render(request, 'resume/san_francisco.html', {'form': form, 'resume': resume, 'pp_url': pp_url})
+
+
+	elif form.is_valid() and request.method == 'POST' and 'export-resume' in request.POST:
+		#Code to Print the Document to resume PDF document :
+		client = pdfcrowd.HtmlToPdfClient('FelixMochama', '0b324480fc23870dd58aaa934cf2c64d')
+		client.setUsePrintMedia(True)
+		client.setPageHeight('-1')
+		client.setDebugLog(True)
+		#Set HTTP response headers to Pdf Format 
+		pdf_response = HttpResponse(content_type='application/pdf')
+		pdf_response['Cache-Control'] = 'max-age=0'
+		pdf_response['Accept-Ranges'] = 'none'
+		content_disp = 'attachment' if 'asAttachment' in request.POST else 'inline'
+		pdf_response['Content-Disposition'] = content_disp + '; filename=my_resume.pdf'
+
+		if form.cleaned_data['resume_template'] == 'rome':
+		    html = render_to_string('resume/rome.html', {'resume': resume, 'pp_url': pp_url})
+		if form.cleaned_data['resume_template'] == 'sf':
+			html = render_to_string('resume/san_francisco.html', {'resume': resume, 'pp_url': pp_url})
+
+		client.convertStringToStream(html, pdf_response) 
+		# send the generated PDF as a Response to the User to Download and Use when Appropriate:
+		return pdf_response
 
 	return render(request, 'resume/choose.html', {'form': form, 'resume': resume})
-
 
 @login_required
 def my_resumes(request):
@@ -90,6 +119,10 @@ def delete_resume(request, pk):
     resume.delete()
     messages.success(request, "Your resume has been deleted!")
     return HttpResponseRedirect(reverse('my-resumes'))
+
+@login_required()
+def templates(request):
+    return render(request, 'resume/templates.html')
 
 @login_required
 def edit_profile(request):
@@ -187,7 +220,7 @@ class ResumeWizard(LoginRequiredMixin,SessionWizardView):
 		            form_instance.model.objects.filter(id=obj.id).update(**form_data)
 		        else:
 		            form_instance.model.objects.create(**form_data)
-
+		            
 		messages.add_message(self.request, messages.SUCCESS, 'Resume has been saved!')
 
 		return HttpResponseRedirect(reverse('my-resumes'))

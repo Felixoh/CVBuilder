@@ -181,14 +181,14 @@ class CustomUserChangeForm(forms.ModelForm):
 class ProfileUpdateForm(ModelForm):
     class Meta:
         model = Profile
-        fields = ['job_title', 'address', 'address2', 'city', 'country', 'phone_number', 'linked_in', 'objective',
+        fields = ['job_title', 'address', 'city', 'country', 'phone_number', 'linked_in', 'objective',
                   'profile_pic', ]
         widgets = {'job_title': TextInput(attrs={'placeholder': 'Desired job title?'}),
-                   'address': TextInput(attrs={'placeholder': 'Home street address?'}),
-                   'address2': TextInput(attrs={'placeholder': 'Sub-County '}),
+                   'address': TextInput(attrs={'placeholder': 'Home  address'}),
                    'city': TextInput(attrs={'placeholder': 'What city do you live in?'}),
                    'phone_number': TextInput(attrs={'placeholder': 'What is your mobile number?', }),
                    'linked_in': TextInput(attrs={'placeholder': 'What is your Social Media profile?'}), }
+
         labels = {"linked_in": "LinkedIn profile",
                   "phone_number": "Mobile number",
                   "profile_pic": "Profile picture",

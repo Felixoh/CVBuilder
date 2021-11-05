@@ -2,32 +2,34 @@
 {% load static %}
 {% block title %}<title>CV Builder | My Resumes</title>{% endblock %}
 {% block content %}
-    <div class="wrapper">
+    <div class="container">
+    <div class="row">     
+    
     {% for resume in resumes %}
-       <div class="resume-box">
-            <div class="container">
-                <p class="resume-name">{{ resume.name }}</p>
-                <p>Created on {{ resume.created_at }}</p>
+        <div class="col-md-4">
+            <div class="card bg-light mb-3" style="max-width: 18rem;">
+              <div class="card-header"><h4> {{ resume.name }} </h4></div>
+              <div class="card-body">
+                <h5 class="card-title">Resume</h5>
+                <p class="card-text"> {{ resume.id }}</p>
+              </div>
+              <div class="card-footer">
+                  <button class="btn btn-primary mr-4 text" ><a href="{% url 'choose' pk=resume.id %}" style="text-decoration:none;color: white;">View</a></button>
 
-                <div class="button-row">
-                    <a href="{% url 'delete-resume' pk=resume.id %}" class="confirm-delete">Delete</a>
-                    <a href="{% url 'edit-resume' pk=resume.id %}" class="edit-resume">Edit</a>
-                    <a href="{% url 'choose' pk=resume.id %}" class="view-resume">View</a>
+                  <button class="btn btn-success m-1"><a href="{% url 'edit-resume' pk=resume.id %}" style="text-decoration:none;color: white;">Edit</a></button>
 
-                </div> 
+                  <button class="btn btn-danger m-1"><a href="{% url 'choose' pk=resume.id %}" style="text-decoration:none;color: white;">Delete</a></button>
+              </div>
             </div>
         </div>
+    </div>
     {% empty %}
         <div class="empty-state-box">
             <img src="{% static 'resume/images/resume-empty-icon.png' %}" class="centered">
-            <p class="empty-state-text"><b>You do not have any Resumes now </b><br>Create one and
-                start building your  First Resume Page</p>
+            <p class="empty-state-text"><b>You do not have any Resumes now </b><br>Create one and start building your  First Resume Page</p>
         </div>
-
     {% endfor %}
         <div class="button-box btn-md" style="border-radius: 10px;">
-            <a href="{% url 'create-resume' %}" class="button btn-info">Create Resume</a>
+            <a href="{% url 'create-resume' %}" class="button btn-info btn-md">Create Resume</a>
         </div>
-
-    </div>
 {% endblock %}

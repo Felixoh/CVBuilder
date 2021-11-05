@@ -108,7 +108,7 @@ class Profile(models.Model):
     job_title = models.CharField(max_length=255, blank=True)
     phone_number = models.CharField(max_length=255, blank=True)
     address = models.CharField(max_length=255, blank=True)
-    address2 = models.CharField(max_length=255, blank=True)
+    # address2 = models.CharField(max_length=255, blank=True)
     city = models.CharField(max_length=255, blank=True)
     country = CountryField(blank_label='(Select country)', blank=True)
     linked_in = models.CharField(max_length=255, blank=True)

@@ -99,7 +99,7 @@
 {% block title %}<title>CV Builder | Templates</title>{% endblock %}
 {% block subheader %}
     <div class="sub-header">
-        <h1>Choose Your Preferred Resume Template </h1>
+        <h2>Choose Your Preferred Resume Template </h2>
     </div>
 {% endblock %}
 {% block content %}
@@ -107,12 +107,12 @@
         <form method="post" action="{% url 'view-resume' pk=resume.id %}">
             {% csrf_token %}
             <input type="radio" name='resume_template' id="id_resume_template_3" value="rome" /><label for="id_resume_template_3"></label>
+            <input type="radio" name='resume_template' id="id_resume_template_4" value="sf" /><label for="id_resume_template_4"></label>
             <div>
                 {{ form.errors.resume_template }}
                 <button type="submit" name="view-resume" class="button">View my resume</button>
-                <button type="submit" name="export-resume" class="button">PDF my resume (Still Under development)</button>
+                <button type="submit" name="export-resume" class="button">PDF my resume</button>
             </div>
-
         </form>
     </div>
 {% endblock %}

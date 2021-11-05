@@ -6,15 +6,16 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/main.css ' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.css' %}"> -->
-    <!-- <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap-reboot.css' %}"> -->
-
     <!-- <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.css' %}"> -->
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'resume/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'resume/fonts/Linearicons-Free-v1.0.0/icon-font.min.css' %}">
+    <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{% static 'resume/css/main.css'%}">
 	<link rel="stylesheet" type="text/css" href="resume/css/jquery-ui.css">
-	<link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.css' %}">
 	{% block style %}{% endblock %}
 	{% block title %}{% endblock %}
     
@@ -29,42 +30,68 @@
             </ul>
         </div>
     {% endif %}
+    
+
+
     <header>
-        <div class="header">
-            <a href="#"><img src="{% static 'resumes/images/logo.png' %}" class="logo"></a>
+        <div class="header bg-primary navbar_top">
+            <div class="container">
+            <a class="navbar-brand" href="#"><h5>CV Builder</h5></a>
             <div class="header-left">
-                <a href="{% url 'my-resumes' %}">My Resumes</a>
+                <a href="{% url 'my-resumes' %}">My Resumes </a>
                 <a href="{% url 'edit-profile' %}">Profile</a>
-                <a href="#">Templates</a>
+                <a href="{% url 'templates' %}">Templates</a>                     
             </div>
             <div class="header-right">
-                <div class="dropdown">
-                    <div class="dropbtn">
-                        <span class="profile-pic-small">
-                            <img src="{{ user.profile.profile_pic.url }}">
-                        </span>
-                        <span class="username">{{ user.username }}</span><i class="fa fa-caret-down"> </i>
-                    </div>
-                    <div class="dropdown-content">
-	                    <a href="#">FAQ</a>
-	                    <a href="{% url 'logout' %}">Logout</a>
-                </div>
-                </div>
+                <span class="profile-pic-small">
+                        <img src="{{ user.profile.profile_pic.url }}">
+                </span>
+                <span style="text-decoration-color: white;">{{ user.username }}</span>
+                <button class="btn btn-success" type="submit"><a href="{% url 'login' %}">Logout</a></button>  
+            </div>  
             </div>
-        </div>
     </header>
+
     {% block subheader %}{% endblock %}
 
     <div class="main-content">
         {% block popup %}{% endblock %}
-        {% block content %}{% endblock %}
+
+        <div class="container">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+        
     </div>
     
 <script src="{% static 'resume/js/jquery-3.3.1.js' %}"></script>
 <script src="{% static 'resume/js/jquery-ui.js' %}"></script>
 <script src="{% static 'resume/js/jquery.formset.js' %}"></script>
 <script src="{% static '/js/tinymce/tinymce.min.js' %}"></script>
-<script src="{% static 'resume/js/scripts.js' %}"></script>
-    
+<!-- Vendor JS from Bootstrap V5 -->
+
+<script type="text/javascript" src="{% static 'jquery/jquery-3.6.0.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'jquery/jquery.js' %}"></script>
+<script type="text/javascript" src="{% static 'jquery/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+<script>
+//Fixed top navigation bar Script :
+document.addEventListener("DOMContentLoaded", function(){
+  window.addEventListener('scroll', function() {
+      if (window.scrollY > 50) {
+        document.getElementById('navbar_top').classList.add('fixed-top');
+        // add padding top to show content behind navbar
+        navbar_height = document.querySelector('.navbar').offsetHeight;
+        document.body.style.paddingTop = navbar_height + 'px';
+      } else {
+        document.getElementById('navbar_top').classList.remove('fixed-top');
+         // remove padding top from body
+        document.body.style.paddingTop = '0';
+      } 
+  });
+}); 
+
+</script>
 </body>
 </html>

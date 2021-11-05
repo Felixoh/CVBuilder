@@ -1,0 +1,59 @@
+{% extends 'resume/layout.html' %}
+{% load static %}
+{% block title %}<title>CV Builder | Templates</title>{% endblock %}
+
+{% block style %}
+<style type="text/css">
+.card {
+      box-shadow: 0 0 10px 0 rgba(100, 100, 100, 0.26);
+} 
+</style>    
+{% endblock %}
+{% block subheader %}
+
+{% endblock %}
+{% block content %} 
+<!-- Styles -->
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card-header" style="border-radius: 7px;">
+                <h5>Rome Template</h5>
+            </div>
+            <img class="card-img-top img-thumbnail" src="{% static 'resume/images/rome-resume.jpg' %}" alt="Card image cap">
+            <div class="card bg-primary text-white text-center p-3">
+                <footer class="blockquote mb-0">
+                      <p>Light Template that allows The Simplistic Preview of The Busy Kind.</p>  
+                </footer>
+            </div>   
+        </div>
+
+        <div class="col-md-4">
+            <div class="card-header" style="border-radius: 7px;">
+                <h5>Safari Template</h5>
+            </div>
+            <img class="card-img-top img-thumbnail" src="{% static 'resume/images/sf-resume.jpg' %}" alt="Card image cap">
+            <div class="card bg-primary text-white text-center p-3">
+                <footer class="blockquote mb-0">
+                      <p>Light Template that allows The Simplistic Preview of The Busy Kind.</p>  
+                </footer>
+            </div>   
+        </div>
+
+        <div class="col-md-4">
+            <div class="card-header" style="border-radius: 7px;">
+                <h5>Rome Template</h5>
+            </div>
+            <img class="card-img-top img-thumbnail" src="{% static 'resume/images/rome-resume.jpg' %}" alt="Card image cap">
+            <div class="card bg-primary text-white text-center p-3">
+                <footer class="blockquote mb-0">
+                      <p>Light Template that allows The Simplistic Preview of The Busy Kind.</p>  
+                </footer>
+            </div>   
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
